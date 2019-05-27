@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PageInfoController {
 
-    @Autowired
-    JedisComponent jedis;
-
     @GetMapping("/createTable")
     @ResponseBody
     public String createTable(@RequestParam("type") String type) {
-        return jedis.get(type);
+        return null;
     }
 
 }

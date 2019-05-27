@@ -4,15 +4,6 @@ spring:
     username: root
     password: root9898008
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    single: 127.0.0.1:6379
-    jedis:
-      pool:
-        max-idle: 8
-        max-active: 8
-        max-wait: 3000
-    timeout: 3000
-    password:
   resources:
     add-mappings: true
     cache:
@@ -23,4 +14,14 @@ spring:
       compressed: true
       html-application-cache: true
     static-locations: classpath:/static/
+
+#redis
+redis:
+  host: 127.0.0.1
+  port: 6379
+  timeout: 3
+  password: 123456
+  poolMaxTotal: 1000
+  poolMaxIdle: 500
+  poolMaxWait: 3
 
