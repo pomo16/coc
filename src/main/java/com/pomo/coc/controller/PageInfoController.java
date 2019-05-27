@@ -15,26 +15,6 @@ public class PageInfoController {
     @Autowired
     JedisComponent jedis;
 
-    @RequestMapping("/index")
-    public String index() {
-        return "index";
-    }
-
-    @RequestMapping("/clans")
-    public String clans() {
-        return "clans";
-    }
-
-    @RequestMapping("/players")
-    public String players() {
-        return "players";
-    }
-
-    @RequestMapping("/making")
-    public String making() {
-        return "making";
-    }
-
     @GetMapping("/createTable")
     @ResponseBody
     public String createTable(@RequestParam("type") String type) {
