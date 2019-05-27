@@ -2,7 +2,14 @@ package com.pomo.coc.util;
 
 import java.io.*;
 
+/**
+ * JSON操作工具
+ */
 public class JsonFile {
+
+    /**
+     * 请求结果写入本地JSON
+     */
     public static void writeJsonFile(String fileName, String data) {
         BufferedWriter writer = null;
         File file = new File(fileName);
@@ -32,6 +39,9 @@ public class JsonFile {
         System.out.println("文件写入成功！");
     }
 
+    /**
+     * 读取本地JSON
+     */
     public static String readJsonFile(String fileName) {
         String jsonStr = "";
         try {

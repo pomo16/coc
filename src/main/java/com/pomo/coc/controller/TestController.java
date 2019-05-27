@@ -1,5 +1,6 @@
 package com.pomo.coc.controller;
 
+import com.pomo.coc.result.Result;
 import com.pomo.coc.util.JsonFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,12 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.net.URLEncoder;
-
-
 
 @Controller
 public class TestController {
@@ -28,7 +23,7 @@ public class TestController {
     /**
      * 测试方法
      */
-    @RequestMapping("/test")
+    @RequestMapping("/xxx")
     @ResponseBody
     public String test(@RequestParam("id") String id) {
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0Y2U2NGE5LTMzMTgtNDFhNC05ODMzLTkwOWRlODYwNGI5YSIsImlhdCI6MTU1NzYyNjc2NSwic3ViIjoiZGV2ZWxvcGVyL2U2YjZmYWJmLWYwZWYtMDMzNC0xZjNmLTBjMmI2NjkzMzkzZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE4My4yMzYuMTkuMTkzIl0sInR5cGUiOiJjbGllbnQifV19.1mmOWiCmTwFHQOkVjzQwDpC16Zc3SeDVuaxte--FDQZdakbFEso-z62DzWVdtbQMqolXIXby1avcEy7NkkEqTw";
@@ -66,8 +61,12 @@ public class TestController {
         return JsonFile.readJsonFile(path);
     }
 
-    @RequestMapping("/getTest")
-    public String getTest() {
-        return "test";
+    /**
+     * 测试接口
+     */
+    @RequestMapping("/test")
+    @ResponseBody
+    public Result<String> test() {
+        return Result.success("cao");
     }
 }

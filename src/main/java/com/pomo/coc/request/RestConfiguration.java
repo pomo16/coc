@@ -1,4 +1,4 @@
-package com.pomo.coc.config;
+package com.pomo.coc.request;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
