@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <title>查询玩家</title>
-    <base th:href="${#request.getContextPath()}">
-    <link rel="stylesheet" href="/static/common/css/common.css">
-    <link rel="stylesheet" href="/static/common/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/common/fullpage/fullpage.css">
-    <link rel="stylesheet" href="/static/common/fontawesome/css/all.min.css">
-    <script src="/static/common/js/jquery-3.3.1.min.js"></script>
-    <script src="/static/common/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/common/fullpage/fullpage.js"></script>
+    <link rel="stylesheet" href="/common/css/common.css">
+    <link rel="stylesheet" href="/common/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/fullpage/fullpage.css">
+    <link rel="stylesheet" href="/common/fontawesome/css/all.min.css">
+    <script src="/common/js/jquery-3.3.1.min.js"></script>
+    <script src="/common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/common/fullpage/fullpage.js"></script>
 
     <style>
         .hh {display: inline;}
@@ -19,7 +18,7 @@
             background-size: cover;
         }
         #section0{
-            background-image: url(static/common/img/background.png);
+            background-image: url(/common/img/background.png);
         }
         #section0 h1{
             text-align:center;
@@ -29,7 +28,7 @@
             position: relative;
         }
         #section1{
-            background-image: url(static/common/img/background2.png);
+            background-image: url(/common/img/background2.png);
             padding: 6% 0 0 0;
             color: white;
         }
@@ -129,7 +128,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class=" navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                        <a class="navbar-brand ml-3" href="/index"><img style="width: 80px;height: 40px;" src="/static/common/img/logo.png" /></a>
+                        <a class="navbar-brand ml-3" href="/index"><img style="width: 80px;height: 40px;" src="/common/img/logo.png" /></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -137,25 +136,25 @@
                         <div class="collapse navbar-collapse" id="navbarText">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/index">主页</a>
+                                    <a class="nav-link" href="/index.html">主页</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#">查询玩家</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/clans">查询部落</a>
+                                    <a class="nav-link" href="/clans.html">查询部落</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/making">广场</a>
+                                    <a class="nav-link" href="/making.html">广场</a>
                                 </li>
                             </ul>
                             <span class="navbar-text">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/making">登录</a>
+                                <a class="nav-link" href="/making.html">登录</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/making">注册</a>
+                                <a class="nav-link" href="/making.html">注册</a>
                             </li>
 
                         </ul>

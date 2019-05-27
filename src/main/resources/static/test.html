@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>xxx</title>
+    <link rel="stylesheet" href="/common/css/common.css">
+    <link rel="stylesheet" href="/common/bootstrap/bootstrap.min.css">
+    <script src="/common/js/jquery-3.3.1.min.js"></script>
+    <script src="/common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#bt").click(function(){
+                $.get("/test",function(data){
+                    console.log(data);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<button id="bt">xxx</button>
+</body>
+</html>
