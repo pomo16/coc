@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>查询玩家</title>
+    <base th:href="${#request.getContextPath()}">
+    <link rel="stylesheet" href="/static/common/css/common.css">
+    <link rel="stylesheet" href="/static/common/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/common/fullpage/fullpage.css">
+    <link rel="stylesheet" href="/static/common/fontawesome/css/all.min.css">
+    <script src="/static/common/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/common/fullpage/fullpage.js"></script>
+
+    <style>
+        .hh {display: inline;}
+        .section{
+            background-size: cover;
+        }
+        #section0{
+            background-image: url(static/common/img/background.png);
+        }
+        #section0 h1{
+            text-align:center;
+            color: #353A3F;
+            top: 50%;
+            transform: translateY(-100%);
+            position: relative;
+        }
+        #section1{
+            background-image: url(static/common/img/background2.png);
+            padding: 6% 0 0 0;
+            color: white;
+        }
+        .feature{
+            display: table;
+            width: 40%;
+            height: 30%;
+            vertical-align: middle;
+            color: #fff;
+            position: absolute;
+            top: 40%;
+            left: 30%;
+        }
+        .feature-inner {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .arrow {
+            color:white;
+            width: 20%;
+            text-align:center;
+            opacity:0.4;
+        }
+        .arrowDown {
+            position: absolute;
+            top: 75%;
+            left: 40%;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#searchBt").click(function(){
+                var id = $("#searchInput").val();
+                var ajax = $.ajax({
+                    url : "/search",
+                    type : "GET",
+                    data : {type: "players", id: id},
+                    timeout:5000, //超时时间
+                    beforeSend:function(){
+                        $("#searchBt").removeClass("btn-primary").addClass("btn-secondary").html("<i class='fa fa-spinner fa-pulse' style='cursor:no-drop'></i>"); //在后台返回success之前显示loading图标
+                    },
+                    success : function(result) {
+                        if (result == "false") {
+                            alert("request failed");
+                        } else {
+                            var res = JSON.parse(result);
+                            $("#name").text(res.name);
+                            $("#expLevel").text(" LV." + res.expLevel);
+                            $("#tag").text(res.tag.replace('%','#'));
+                            $("#clanImg").html("<img style='height:30px;width:30px;' src='" + res.clan.badgeUrls.small + "'/>" + res.clan.name + "(LV." + res.clan.clanLevel + ")");
+                            $("#townHallLevel").text(" (" + res.townHallLevel + "本)");
+                            $("#builderHallLevel").text(" (" + res.builderHallLevel + "本)");
+
+                            $("#trophies").text("🏆" + res.trophies);
+                            $("#bestTrophies").text("🏆" + res.bestTrophies);
+                            $("#versusTrophies").text("🏆" + res.versusTrophies);
+                            $("#bestVersusTrophies").text("🏆" + res.bestVersusTrophies);
+
+                            $("#attackWins").text(res.attackWins);
+                            $("#versusBattleWins").text(res.versusBattleWins);
+                            $("#defenseWins").text(res.defenseWins);
+
+                            $("#warStars").text(res.warStars);
+                            $("#role").text(res.role);
+                            $("#donations").text(res.donations);
+                            $("#donationsReceived").text(res.donationsReceived);
+                            fullpage_api.moveSectionDown();
+                        }
+                        $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
+                    },
+                    fail : function() {
+                        alert("请求失败");
+                        $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
+                    },
+                    complete : function(XMLHttpRequest, status) { //请求完成后最终执行参数
+                        if (status == 'timeout') {//超时,status还有success,error等值的情况
+                            ajax.abort();
+                            $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
+                        }
+                    }
+                });
+            });
+
+            $("#arrowDownBt").click(function () {
+                fullpage_api.moveSectionDown();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="w-100">
+        <!-- 导航栏 -->
+        <div class="w-100">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class=" navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                        <a class="navbar-brand ml-3" href="/index"><img style="width: 80px;height: 40px;" src="/static/common/img/logo.png" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/index">主页</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">查询玩家</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/clans">查询部落</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/making">广场</a>
+                                </li>
+                            </ul>
+                            <span class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/making">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/making">注册</a>
+                            </li>
+
+                        </ul>
+                    </span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="fullpage">
+            <!-- 第一页 -->
+            <div class="section " id="section0">
+                <h1>查询玩家</h1>
+                <div class="feature">
+                    <div class="feature-inner">
+                        <div class="input-group input-group-lg">
+                            <input type="text" placeholder="Player ID e.g.YQ8JVQYUP" class="form-control input-lg" id="searchInput">
+                            <span class="btn-lg btn-primary input-group-addon input-group-btn" id="searchBt" style="cursor: pointer">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow arrowDown" id="arrowDownBt">
+                    <i class="fas fa-chevron-down fa-7x" style="cursor:pointer"></i>
+                </div>
+            </div>
+
+            <!-- 第二页 -->
+            <div class="section" id="section1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-10"><h1 class="hh" id="name">暂无玩家信息，请返回上一页搜索</h1><h5 class="hh" id="expLevel"></h5></div>
+                        <h5 class="col-2 m-auto" id="tag"></h5>
+                    </div>
+                    <div class="row">
+                        <h5 class="col-12 text-left" id="clanImg"></h5>
+                    </div>
+                    <div class="row">
+                        <h1 class="col-12"></h1>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-4"><h3 class="hh">主世界</h3><h5 class="hh" id="townHallLevel"></h5></div>
+                        <h3 class="col-2"></h3>
+                        <div class="col-4"><h3 class="hh">夜世界</h3><h5 class="hh" id="builderHallLevel"></h5></div>
+                        <h3 class="col-2"></h3>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">目前杯数</h5>
+                        <h5 class="col-4" id="trophies"></h5>
+                        <h5 class="col-2">目前杯数</h5>
+                        <h5 class="col-4" id="versusTrophies"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">最高杯数</h5>
+                        <h5 class="col-4" id="bestTrophies"></h5>
+                        <h5 class="col-2">最高杯数</h5>
+                        <h5 class="col-4" id="bestVersusTrophies"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">进攻胜利</h5>
+                        <h5 class="col-4" id="attackWins"></h5>
+                        <h5 class="col-2">总胜场</h5>
+                        <h5 class="col-4" id="versusBattleWins"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">防守胜利</h5>
+                        <h5 class="col-10" id="defenseWins"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">战争之星</h5>
+                        <h5 class="col-10" id="warStars"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">部落职位</h5>
+                        <h5 class="col-10" id="role"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">捐兵数</h5>
+                        <h5 class="col-10" id="donations"></h5>
+                    </div>
+                    <div class="row">
+                        <h6 class="col-12"></h6>
+                    </div>
+                    <div class="row text-left">
+                        <h5 class="col-2">收兵数</h5>
+                        <h5 class="col-10" id="donationsReceived"></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        new fullpage('#fullpage', {
+            verticalCentered: false
+        });
+    </script>
+</body>
+
+</html>
+

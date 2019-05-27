@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <base th:href="${#request.getContextPath()}">
+	<title>尚在开发中...</title>
+    <link rel="stylesheet" href="/static/common/css/common.css">
+    <link rel="stylesheet" href="/static/common/bootstrap/bootstrap.min.css">
+    <script src="/static/common/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/common/bootstrap/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        #web_bg{
+            position:fixed;
+            top: 0;
+            left: 0;
+            width:100%;
+            height:100%;
+            min-width: 1000px;
+            z-index:-10;
+            zoom: 1;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center 0;
+        }
+        #title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            top: 40%;
+            color: white;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="web_bg" style="background-image: url(/static/common/img/background2.png);"></div>
+
+    <!-- 导航栏 -->
+    <div class="w-100" id="top">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand ml-3" href="/index"><img style="width: 80px;height: 40px;" src="/static/common/img/logo.png" /></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/index">主页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/players">查询玩家</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/clans">查询部落</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">广场</a>
+                            </li>
+                        </ul>
+                        <span class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">注册</a>
+                            </li>
+
+                        </ul>
+                    </span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+	<text id="title">功能尚在开发中，敬请期待！</text>
+
+</body>
+</html>

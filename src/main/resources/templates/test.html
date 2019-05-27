@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>xxx</title>
+    <base th:href="${#request.getContextPath()}">
+    <link rel="stylesheet" href="/static/common/css/common.css">
+    <link rel="stylesheet" href="/static/common/bootstrap/bootstrap.min.css">
+    <script src="/static/common/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#bt").click(function(){
+                $.get("/test",function(data){
+                    console.log(data);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<button id="bt">xxx</button>
+</body>
+</html>

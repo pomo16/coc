@@ -1,0 +1,7 @@
+@charset "utf-8";
+*{margin:0; padding:0}
+body{overflow-x: hidden}
+
+.title{width:100%;text-align: center;}
+.title h2{border-bottom: 5px solid #5F2975;width: 300px;margin:50px auto 5px auto;line-height: 50px;}
+
