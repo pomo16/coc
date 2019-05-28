@@ -31,7 +31,7 @@ public class RunTask {
     @Scheduled(initialDelay=1000, fixedRate = 1000 * 60 * 20)
     @Async
     public void runFixedRate1() {
-        System.err.println(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+        System.err.println(new SimpleDateFormat("HH:mm:ss").format(new Date()) + " 玩家排行榜定时任务");
         String data = requestService.requestForData(RequestService.PLAYERS_RANK);
         if (!data.equals("false")){
             redisService.set(DataKey.playersRankData, "", data);
@@ -44,7 +44,7 @@ public class RunTask {
     @Scheduled(initialDelay=1000, fixedRate = 1000 * 60 * 60)
     @Async
     public void runFixedRate2() {
-        System.err.println(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+        System.err.println(new SimpleDateFormat("HH:mm:ss").format(new Date()) + " 部落排行榜定时任务");
         String data = requestService.requestForData(RequestService.CLANS_RANK);
         if (!data.equals("false")){
             redisService.set(DataKey.clansRankData, "", data);
