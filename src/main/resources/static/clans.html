@@ -65,9 +65,9 @@
             $("#searchBt").click(function(){
                 var id = $("#searchInput").val();
                 var ajax = $.ajax({
-                    url : "/search",
+                    url : "/test/json?name=test",
                     type : "GET",
-                    data : {type: "players", id: id},
+                    //data : {id: id},
                     timeout:5000, //超时时间
                     beforeSend:function(){
                         $("#searchBt").removeClass("btn-primary").addClass("btn-secondary").html("<i class='fa fa-spinner fa-pulse' style='cursor:no-drop'></i>"); //在后台返回success之前显示loading图标
@@ -76,27 +76,26 @@
                         if (result == "false") {
                             alert("request failed");
                         } else {
+                            reset();
                             var res = JSON.parse(result);
                             $("#name").text(res.name);
-                            $("#expLevel").text(" LV." + res.expLevel);
+                            $("#clanLevel").text(" LV." + res.clanLevel);
                             $("#tag").text(res.tag.replace('%','#'));
-                            $("#clanImg").html("<img style='height:30px;width:30px;' src='" + res.clan.badgeUrls.small + "'/>" + res.clan.name + "(LV." + res.clan.clanLevel + ")");
-                            $("#townHallLevel").text(" (" + res.townHallLevel + "本)");
-                            $("#builderHallLevel").text(" (" + res.builderHallLevel + "本)");
+                            $("#clanImg").html("<img style='height:70px;width:70px;' src='" + res.badgeUrls.small + "'/>");
+                            $("#members").text(res.members + "/50");
 
-                            $("#trophies").text("🏆" + res.trophies);
-                            $("#bestTrophies").text("🏆" + res.bestTrophies);
-                            $("#versusTrophies").text("🏆" + res.versusTrophies);
-                            $("#bestVersusTrophies").text("🏆" + res.bestVersusTrophies);
+                            $("#clanPoints").text("🏆" + res.clanPoints);
+                            $("#clanVersusPoints").text("🏆" + res.clanVersusPoints);
+                            $("#type").text(res.type);
+                            $("#requiredTrophies").text("🏆" + res.requiredTrophies);
+                            $("#description").text(res.description);
 
-                            $("#attackWins").text(res.attackWins);
-                            $("#versusBattleWins").text(res.versusBattleWins);
-                            $("#defenseWins").text(res.defenseWins);
-
-                            $("#warStars").text(res.warStars);
-                            $("#role").text(res.role);
-                            $("#donations").text(res.donations);
-                            $("#donationsReceived").text(res.donationsReceived);
+                            $("#warFrequency").text(res.warFrequency);
+                            $("#warWinStreak").text(res.warWinStreak);
+                            $("#isWarLogPublic").text(res.isWarLogPublic);
+                            $("#warWins").text(res.warWins);
+                            $("#warTies").text(res.warTies);
+                            $("#warLosses").text(res.warLosses);
                             fullpage_api.moveSectionDown();
                         }
                         $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
@@ -114,9 +113,30 @@
                 });
             });
 
-        $("#arrowDownBt").click(function () {
-            fullpage_api.moveSectionDown();
+            $("#arrowDownBt").click(function () {
+                fullpage_api.moveSectionDown();
+            });
         });
+
+        function reset() {
+            $("#name").text("");
+            $("#clanLevel").text("");
+            $("#tag").text("");
+            $("#clanImg").html("");
+            $("#members").text("");
+            $("#clanPoints").text("");
+            $("#clanVersusPoints").text("");
+            $("#type").text("");
+            $("#requiredTrophies").text("");
+            $("#description").text("");
+            $("#warFrequency").text("");
+            $("#warWinStreak").text("");
+            $("#warWins").text("");
+            $("#isWarLogPublic").text("");
+            $("#warTies").text("");
+            $("#warLosses").text("");
+        }
+
     </script>
 
 
@@ -185,85 +205,72 @@
 
             <!-- 第二页 -->
             <div class="section" id="section1">
+                <div class="row">
+                    <h1 class="col-12">&nbsp;</h1>
+                </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-10"><h1 class="hh" id="name">暂无部落信息，请返回上一页搜索</h1><h5 class="hh" id="expLevel"></h5></div>
+                        <h1 class="col-1" id="clanImg"></h1>
+                        <h1 class="col-9" id="name">暂无部落信息，请返回上一页搜索</h1>
                         <h5 class="col-2 m-auto" id="tag"></h5>
                     </div>
                     <div class="row">
-                        <h5 class="col-12 text-left" id="clanImg"></h5>
-                    </div>
-                    <!--<div class="row" style="background-color: rgba(255, 255, 255, 0.5);"></div>-->
-                    <div class="row">
-                        <h1 class="col-12"></h1>
+                        <h1 class="col-12">&nbsp;</h1>
                     </div>
                     <div class="row text-left">
-                        <div class="col-4"><h3 class="hh">主世界</h3><h5 class="hh" id="townHallLevel"></h5></div>
-                        <h3 class="col-2"></h3>
-                        <div class="col-4"><h3 class="hh">夜世界</h3><h5 class="hh" id="builderHallLevel"></h5></div>
-                        <h3 class="col-2"></h3>
+                        <h4 class="col-2">等级</h4>
+                        <h4 class="col-4" id="clanLevel"></h4>
+                        <h4 class="col-2">部落成员</h4>
+                        <h4 class="col-4" id="members"></h4>
                     </div>
                     <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h4 class="col-12"></h4>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">目前杯数</h5>
-                        <h5 class="col-4" id="trophies"></h5>
-                        <h5 class="col-2">目前杯数</h5>
-                        <h5 class="col-4" id="versusTrophies"></h5>
+                        <h4 class="col-2">主世界杯数</h4>
+                        <h4 class="col-4" id="clanPoints"></h4>
+                        <h4 class="col-2">夜世界杯数</h4>
+                        <h4 class="col-4" id="clanVersusPoints"></h4>
                     </div>
                     <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h4 class="col-12"></h4>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">最高杯数</h5>
-                        <h5 class="col-4" id="bestTrophies"></h5>
-                        <h5 class="col-2">最高杯数</h5>
-                        <h5 class="col-4" id="bestVersusTrophies"></h5>
+                        <h4 class="col-2">类型</h4>
+                        <h4 class="col-4" id="type"></h4>
+                        <h4 class="col-2">所需杯数</h4>
+                        <h4 class="col-4" id="requiredTrophies"></h4>
                     </div>
                     <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h4 class="col-12"></h4>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">进攻胜利</h5>
-                        <h5 class="col-4" id="attackWins"></h5>
-                        <h5 class="col-2">总胜场</h5>
-                        <h5 class="col-4" id="versusBattleWins"></h5>
+                        <h4 class="col-2">部落简介</h4>
+                        <h5 class="col-9" id="description"></h5>
+                        <h4 class="col-1"></h4>
                     </div>
+
                     <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h1 class="col-12">&nbsp;</h1>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">防守胜利</h5>
-                        <h5 class="col-10" id="defenseWins"></h5>
-                    </div>
-                    <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h2 class="col-12">部落战</h2>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">战争之星</h5>
-                        <h5 class="col-10" id="warStars"></h5>
-                    </div>
-                    <div class="row">
-                        <h6 class="col-12"></h6>
-                    </div>
-                    <div class="row text-left">
-                        <h5 class="col-2">部落职位</h5>
-                        <h5 class="col-10" id="role"></h5>
-                    </div>
-                    <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h4 class="col-2">频率</h4>
+                        <h4 class="col-2" id="warFrequency"></h4>
+                        <h4 class="col-2">部落战连胜</h4>
+                        <h4 class="col-2" id="warWinStreak"></h4>
+                        <h4 class="col-2">对战记录公开</h4>
+                        <h4 class="col-2" id="isWarLogPublic"></h4>
                     </div>
                     <div class="row text-left">
-                        <h5 class="col-2">捐兵数</h5>
-                        <h5 class="col-10" id="donations"></h5>
-                    </div>
-                    <div class="row">
-                        <h6 class="col-12"></h6>
-                    </div>
-                    <div class="row text-left">
-                        <h5 class="col-2">收兵数</h5>
-                        <h5 class="col-10" id="donationsReceived"></h5>
+                        <h4 class="col-2">部落战胜局</h4>
+                        <h4 class="col-2" id="warWins"></h4>
+                        <h4 class="col-2">部落战平局</h4>
+                        <h4 class="col-2" id="warTies"></h4>
+                        <h4 class="col-2">部落战败局</h4>
+                        <h4 class="col-2" id="warLosses"></h4>
                     </div>
                 </div>
             </div>

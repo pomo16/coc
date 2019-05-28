@@ -21,9 +21,9 @@ public class TestController {
      */
     @RequestMapping("/json")
     @ResponseBody
-    public Result<String> json() {
-        String path = TestController.class.getClassLoader().getResource("test.json").getPath();
-        return Result.success(JsonFile.readJsonFile(path));
+    public String json(@RequestParam("name") String name) {
+        String path = TestController.class.getClassLoader().getResource(name + ".json").getPath();
+        return JsonFile.readJsonFile(path);
     }
 
     /**
@@ -32,7 +32,8 @@ public class TestController {
     @RequestMapping("/test")
     @ResponseBody
     public Result<String> test(@RequestParam("id") String id) {
-        String url = RequestService.PLAYER + id;
-        return Result.success(requestService.requestForData(url));
+        String url = RequestService.CLAN + id;
+        requestService.requestForDataTest(url);
+        return Result.success("good");
     }
 }

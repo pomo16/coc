@@ -65,24 +65,31 @@
             $("#searchBt").click(function(){
                 var id = $("#searchInput").val();
                 var ajax = $.ajax({
-                    url : "/search",
+                    url : "/search/player",
                     type : "GET",
-                    data : {type: "players", id: id},
+                    data : {id: id},
                     timeout:5000, //超时时间
                     beforeSend:function(){
                         $("#searchBt").removeClass("btn-primary").addClass("btn-secondary").html("<i class='fa fa-spinner fa-pulse' style='cursor:no-drop'></i>"); //在后台返回success之前显示loading图标
                     },
                     success : function(result) {
-                        if (result == "false") {
+                        if (result.data == "false") {
                             alert("request failed");
                         } else {
-                            var res = JSON.parse(result);
+                            reset();
+                            var res = $.parseJSON(result.data);
                             $("#name").text(res.name);
                             $("#expLevel").text(" LV." + res.expLevel);
                             $("#tag").text(res.tag.replace('%','#'));
-                            $("#clanImg").html("<img style='height:30px;width:30px;' src='" + res.clan.badgeUrls.small + "'/>" + res.clan.name + "(LV." + res.clan.clanLevel + ")");
+                            if('clan' in res) {
+                                $("#clanImg").html("<img style='height:30px;width:30px;' src='" + res.clan.badgeUrls.small + "'/>" + res.clan.name + "(LV." + res.clan.clanLevel + ")");
+                            }
+
                             $("#townHallLevel").text(" (" + res.townHallLevel + "本)");
-                            $("#builderHallLevel").text(" (" + res.builderHallLevel + "本)");
+
+                            if('builderHallLevel' in res) {
+                                $("#builderHallLevel").text(" (" + res.builderHallLevel + "本)");
+                            }
 
                             $("#trophies").text("🏆" + res.trophies);
                             $("#bestTrophies").text("🏆" + res.bestTrophies);
@@ -94,7 +101,11 @@
                             $("#defenseWins").text(res.defenseWins);
 
                             $("#warStars").text(res.warStars);
-                            $("#role").text(res.role);
+
+                            if('role' in res) {
+                                $("#role").text(res.role);
+                            }
+
                             $("#donations").text(res.donations);
                             $("#donationsReceived").text(res.donationsReceived);
                             fullpage_api.moveSectionDown();
@@ -118,6 +129,26 @@
                 fullpage_api.moveSectionDown();
             });
         });
+
+        function reset() {
+            $("#name").text("");
+            $("#expLevel").text("");
+            $("#tag").text("");
+            $("#clanImg").html("");
+            $("#townHallLevel").text("");
+            $("#builderHallLevel").text("暂无");
+            $("#trophies").text("");
+            $("#bestTrophies").text("");
+            $("#versusTrophies").text("");
+            $("#bestVersusTrophies").text("");
+            $("#attackWins").text("");
+            $("#versusBattleWins").text("");
+            $("#defenseWins").text("");
+            $("#warStars").text("");
+            $("#role").text("暂未加入部落");
+            $("#donations").text("");
+            $("#donationsReceived").text("");
+        }
     </script>
 </head>
 
@@ -186,6 +217,9 @@
             <div class="section" id="section1">
                 <div class="container">
                     <div class="row">
+                        <h1 class="col-12">&nbsp;</h1>
+                    </div>
+                    <div class="row">
                         <div class="col-10"><h1 class="hh" id="name">暂无玩家信息，请返回上一页搜索</h1><h5 class="hh" id="expLevel"></h5></div>
                         <h5 class="col-2 m-auto" id="tag"></h5>
                     </div>
@@ -195,6 +229,9 @@
                     <div class="row">
                         <h1 class="col-12"></h1>
                     </div>
+                    <div class="row">
+                        <h6 class="col-12">&nbsp;</h6>
+                    </div>
                     <div class="row text-left">
                         <div class="col-4"><h3 class="hh">主世界</h3><h5 class="hh" id="townHallLevel"></h5></div>
                         <h3 class="col-2"></h3>
@@ -202,7 +239,7 @@
                         <h3 class="col-2"></h3>
                     </div>
                     <div class="row">
-                        <h6 class="col-12"></h6>
+                        <h6 class="col-12">&nbsp;</h6>
                     </div>
                     <div class="row text-left">
                         <h5 class="col-2">目前杯数</h5>
