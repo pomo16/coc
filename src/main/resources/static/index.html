@@ -29,7 +29,7 @@
                 data: "type=players",
                 type: "GET",
                 success: function (result) {
-                    var res = JSON.parse(result);
+                    var res = $.parseJSON(result.data);
                     $.each(res.items, function (index, item) {
                         var rankTd = $("<td></td>").append(item.rank).addClass("col-sm-2");
                         var nameTd = $("<td></td>").append(item.name).addClass("col-sm-5");
@@ -52,7 +52,7 @@
                 data: "type=clans",
                 type: "GET",
                 success: function (result) {
-                    var res = JSON.parse(result);
+                    var res = $.parseJSON(result.data);
                     $.each(res.items, function (index, item) {
                         var rankTd = $("<td></td>").append(item.rank).addClass("col-sm-2");
                         var nameTd = $("<td></td>").append(item.name).addClass("col-sm-5");

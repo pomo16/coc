@@ -20,7 +20,7 @@ redis:
   host: 127.0.0.1
   port: 6379
   timeout: 3
-  password: 123456
+  password:
   poolMaxTotal: 1000
   poolMaxIdle: 500
   poolMaxWait: 3
