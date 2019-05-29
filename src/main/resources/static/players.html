@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>查询玩家</title>
-    <link rel="stylesheet" href="/common/css/common.css">
-    <link rel="stylesheet" href="/common/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/common/fullpage/fullpage.css">
-    <link rel="stylesheet" href="/common/fontawesome/css/all.min.css">
-    <script src="/common/js/jquery-3.3.1.min.js"></script>
-    <script src="/common/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/common/fullpage/fullpage.js"></script>
+    <link rel="stylesheet" href="./common/css/common.css">
+    <link rel="stylesheet" href="./common/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./common/fullpage/fullpage.css">
+    <link rel="stylesheet" href="./common/fontawesome/css/all.min.css">
+    <script src="./common/js/jquery-3.3.1.min.js"></script>
+    <script src="./common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./common/fullpage/fullpage.js"></script>
+    <script type="text/javascript" src="./players.js"></script>
 
     <style>
         .hh {display: inline;}
@@ -18,7 +19,7 @@
             background-size: cover;
         }
         #section0{
-            background-image: url(/common/img/background.png);
+            background-image: url(./common/img/background.png);
         }
         #section0 h1{
             text-align:center;
@@ -28,7 +29,7 @@
             position: relative;
         }
         #section1{
-            background-image: url(/common/img/background2.png);
+            background-image: url(./common/img/background2.png);
             padding: 6% 0 0 0;
             color: white;
         }
@@ -59,97 +60,6 @@
             left: 40%;
         }
     </style>
-
-    <script type="text/javascript">
-        $(function(){
-            $("#searchBt").click(function(){
-                var id = $("#searchInput").val();
-                var ajax = $.ajax({
-                    url : "/search/player",
-                    type : "GET",
-                    data : {id: id},
-                    timeout:5000, //超时时间
-                    beforeSend:function(){
-                        $("#searchBt").removeClass("btn-primary").addClass("btn-secondary").html("<i class='fa fa-spinner fa-pulse' style='cursor:no-drop'></i>"); //在后台返回success之前显示loading图标
-                    },
-                    success : function(result) {
-                        if (result.data == "false") {
-                            alert("request failed");
-                        } else {
-                            reset();
-                            var res = $.parseJSON(result.data);
-                            $("#name").text(res.name);
-                            $("#expLevel").text(" LV." + res.expLevel);
-                            $("#tag").text(res.tag.replace('%','#'));
-                            if('clan' in res) {
-                                $("#clanImg").html("<img style='height:30px;width:30px;' src='" + res.clan.badgeUrls.small + "'/>" + res.clan.name + "(LV." + res.clan.clanLevel + ")");
-                            }
-
-                            $("#townHallLevel").text(" (" + res.townHallLevel + "本)");
-
-                            if('builderHallLevel' in res) {
-                                $("#builderHallLevel").text(" (" + res.builderHallLevel + "本)");
-                            }
-
-                            $("#trophies").text("🏆" + res.trophies);
-                            $("#bestTrophies").text("🏆" + res.bestTrophies);
-                            $("#versusTrophies").text("🏆" + res.versusTrophies);
-                            $("#bestVersusTrophies").text("🏆" + res.bestVersusTrophies);
-
-                            $("#attackWins").text(res.attackWins);
-                            $("#versusBattleWins").text(res.versusBattleWins);
-                            $("#defenseWins").text(res.defenseWins);
-
-                            $("#warStars").text(res.warStars);
-
-                            if('role' in res) {
-                                $("#role").text(res.role);
-                            }
-
-                            $("#donations").text(res.donations);
-                            $("#donationsReceived").text(res.donationsReceived);
-                            fullpage_api.moveSectionDown();
-                        }
-                        $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
-                    },
-                    fail : function() {
-                        alert("请求失败");
-                        $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
-                    },
-                    complete : function(XMLHttpRequest, status) { //请求完成后最终执行参数
-                        if (status == 'timeout') {//超时,status还有success,error等值的情况
-                            ajax.abort();
-                            $("#searchBt").removeClass("btn-secondary").addClass("btn-primary").text("搜索");
-                        }
-                    }
-                });
-            });
-
-            $("#arrowDownBt").click(function () {
-                fullpage_api.moveSectionDown();
-            });
-        });
-
-        function reset() {
-            $("#name").text("");
-            $("#expLevel").text("");
-            $("#tag").text("");
-            $("#clanImg").html("");
-            $("#townHallLevel").text("");
-            $("#builderHallLevel").text("暂无");
-            $("#trophies").text("");
-            $("#bestTrophies").text("");
-            $("#versusTrophies").text("");
-            $("#bestVersusTrophies").text("");
-            $("#attackWins").text("");
-            $("#versusBattleWins").text("");
-            $("#defenseWins").text("");
-            $("#warStars").text("");
-            $("#role").text("暂未加入部落");
-            $("#donations").text("");
-            $("#donationsReceived").text("");
-        }
-    </script>
 </head>
 
 <body>
@@ -159,7 +69,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class=" navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                        <a class="navbar-brand ml-3" href="/index"><img style="width: 80px;height: 40px;" src="/common/img/logo.png" /></a>
+                        <a class="navbar-brand ml-3" href="./index.html"><img style="width: 80px;height: 40px;" src="./common/img/logo.png" /></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -167,25 +77,25 @@
                         <div class="collapse navbar-collapse" id="navbarText">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/index.html">主页</a>
+                                    <a class="nav-link" href="./index.html">主页</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#">查询玩家</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/clans.html">查询部落</a>
+                                    <a class="nav-link" href="./clans.html">查询部落</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/making.html">广场</a>
+                                    <a class="nav-link" href="./making.html">广场</a>
                                 </li>
                             </ul>
                             <span class="navbar-text">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/making.html">登录</a>
+                                <a class="nav-link" href="./making.html">登录</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/making.html">注册</a>
+                                <a class="nav-link" href="./making.html">注册</a>
                             </li>
 
                         </ul>
@@ -205,6 +115,7 @@
                         <div class="input-group input-group-lg">
                             <input type="text" placeholder="Player ID e.g.YQ8JVQYUP" class="form-control input-lg" id="searchInput">
                             <span class="btn-lg btn-primary input-group-addon input-group-btn" id="searchBt" style="cursor: pointer">搜索</span>
+                            <div class="invalid-feedback" id="inputFeedback"></div>
                         </div>
                     </div>
                 </div>
