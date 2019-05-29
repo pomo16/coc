@@ -1,5 +1,5 @@
 # coc
-A query web of game named clash of clans.
+A query website of game named clash of clans.
 
 ### 开发环境
 
