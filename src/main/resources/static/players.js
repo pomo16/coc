@@ -15,7 +15,7 @@
                  success: function (result) {
                      if (result.data === "false") {
                          $("#searchInput").removeClass("is-valid").addClass("is-invalid");
-                         $("#inputFeedback").text("未找到该部落");
+                         $("#inputFeedback").text("未找到该玩家");
                      } else {
                          reset();
                          var res = $.parseJSON(result.data);

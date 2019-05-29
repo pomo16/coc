@@ -19,7 +19,7 @@ public class RestConfiguration {
 
     @Bean
     public RestTemplate restTemplate() {
-        builder.setConnectTimeout(Duration.ofSeconds(2));
+        builder.setConnectTimeout(Duration.ofSeconds(3));
         return builder.build();
     }
 }

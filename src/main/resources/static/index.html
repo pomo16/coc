@@ -34,7 +34,12 @@
                         var rankTd = $("<td></td>").append(item.rank).addClass("col-sm-2");
                         var nameTd = $("<td></td>").append(item.name).addClass("col-sm-5");
                         var trophiesTd = $("<td></td>").append(item.trophies).addClass("col-sm-2");
-                        var clanTd = $("<td></td>").append(item.clan.name).addClass("col-sm-3");
+                        if('clan' in item) {
+                            var clanTd = $("<td></td>").append(item.clan.name).addClass("col-sm-3");
+                        } else {
+                            var clanTd = $("<td></td>").append("（暂无部落）").addClass("col-sm-3");
+                        }
+
 
                         if (item.rank <= 10) {
                             $("<tr></tr>").append(rankTd).append(nameTd).append(trophiesTd).append(clanTd).addClass("row mx-0").appendTo("#players_table1 tbody");
