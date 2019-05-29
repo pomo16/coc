@@ -3,19 +3,19 @@ $(function(){
         if(checkInput()) {
             var id = $("#searchInput").val();
             var ajax = $.ajax({
-                url: "/test/json?name=test",
+                url: "/search/clan",
                 type: "GET",
-                //data : {id: id},
-                timeout: 5000, //超时时间
+                data : {id: id},
                 beforeSend: function () {
                     $("#searchBt").removeClass("btn-primary").addClass("btn-secondary").html("<i class='fa fa-spinner fa-pulse' style='cursor:no-drop'></i>"); //在后台返回success之前显示loading图标
                 },
                 success: function (result) {
                     if (result.data === "false") {
-                        alert("request failed");
+                        $("#searchInput").removeClass("is-valid").addClass("is-invalid");
+                        $("#inputFeedback").text("未找到该部落");
                     } else {
                         reset();
-                        var res = JSON.parse(result);
+                        var res = JSON.parse(result.data);
                         $("#name").text(res.name);
                         $("#clanLevel").text(" LV." + res.clanLevel);
                         $("#tag").text(res.tag.replace('%', '#'));
@@ -74,39 +74,35 @@ function reset() {
     $("#isWarLogPublic").text("");
     $("#warTies").text("");
     $("#warLosses").text("");
+    $("#searchInput").removeClass("is-invalid").addClass("is-valid");
+    $("#inputFeedback").text("");
 }
 
 function checkInput() {
-    var searchInput = document.getElementById("searchInput");
-    var feedback = document.getElementById("inputFeedback");
     //不能为空
-    if(searchInput.value === ""){
-        feedback.innerHTML = "ID不能为空！";
-        searchInput.classList.remove("is-valid");//清除合法状态
-        searchInput.classList.add("is-invalid");//添加非法状态
+    if($("#searchInput").val() === ""){
+        $("#searchInput").removeClass("is-valid").addClass("is-invalid");
+        $("#inputFeedback").text("ID不能为空！");
         return false;
     }
 
     //长度检查
-    if(searchInput.value.length < 8 || searchInput.value.length > 9){
-        feedback.innerHTML = "ID长度只能为8~9位！";
-        searchInput.classList.remove("is-valid");//清除合法状态
-        searchInput.classList.add("is-invalid");//添加非法状态
+    if($("#searchInput").val().length < 8 || $("#searchInput").val().length > 9){
+        $("#searchInput").removeClass("is-valid").addClass("is-invalid");
+        $("#inputFeedback").text("ID长度只能为8~9位！");
         return false;
     }
 
     //只能包含数字和字母
     var patrn = /^[0-9a-zA-Z]+$/;//正则表达式
-    if(!patrn.exec(searchInput.value)){
-        feedback.innerHTML = "ID只能由字母和数字组成！";
-        searchInput.classList.remove("is-valid");
-        searchInput.classList.add("is-invalid");
+    if(!patrn.exec($("#searchInput").val())){
+        $("#searchInput").removeClass("is-valid").addClass("is-invalid");
+        $("#inputFeedback").text("ID只能由字母和数字组成！");
         return false;
     }
 
     //清除错误提示，改成成功提示
-    searchInput.classList.remove("is-invalid");
-    searchInput.classList.add("is-valid");
-    feedback.innerHTML="";
+    $("#searchInput").removeClass("is-invalid").addClass("is-valid");
+    $("#inputFeedback").text("");
     return true;
 }
